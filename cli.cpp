@@ -24,19 +24,23 @@ std::cout << "List of arguments - " << std::endl;
 //Command line arguments for cli
 int main(int argc, char *argv[]){
 	
-	int opt;
+	int option;
       
     // put ':' in the starting of the
     // string so that program can 
     //distinguish between '?' and ':' 
-    while((opt = getopt(argc, argv,":if:lrx")) != -1) 
+    while((option = getopt(argc, argv,":ced")) != -1) 
     { 
-        switch(opt) 
+        switch(option) 
         { 
-            case '-': std::cout << "single hyphen"; 
-            case 'l': 
-            case 'r': 
-                std::cout << "option: %c" << std::endl << opt; 
+            case 'c': 
+            	std::cout << "Creating a new note" << std::endl;
+            	break; 
+            case 'e':
+            	std::cout << "Editing an existing note";
+            	break; 
+            case 'd': 
+                std::cout << "Deleting the note" << std::endl << option; 
                 break; 
             case 'f': 
                 std::cout << "filename: %s " << std::endl << optarg; 
@@ -47,6 +51,9 @@ int main(int argc, char *argv[]){
             case '?': 
                 //printf(“unknown option: %c\n”, optopt);
                 break; 
+            default: 
+            	exit(0);
+            	break;
         } 
     } 
       
@@ -56,7 +63,6 @@ int main(int argc, char *argv[]){
         std::cout << "extra arguments: "<< std::endl << argv[optind]; 
     }
       
-  
 	
 	
 	return 0;
