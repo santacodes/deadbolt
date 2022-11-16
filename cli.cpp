@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include <unistd.h>
+#include "filebackend.hpp"
 
 /*
 
@@ -25,7 +26,7 @@ std::cout << "List of arguments - " << std::endl;
 int main(int argc, char *argv[]){
 	
 	int option;
-      
+    filebackend obj;
     // put ':' in the starting of the
     // string so that program can 
     //distinguish between '?' and ':' 
@@ -35,8 +36,11 @@ int main(int argc, char *argv[]){
         { 
             case 'c': 
             	std::cout << "Creating a new note" << std::endl;
+            	
+            	obj.create();
             	break; 
             case 'e':
+
             	std::cout << "Editing an existing note";
             	break; 
             case 'd': 
@@ -63,7 +67,7 @@ int main(int argc, char *argv[]){
         std::cout << "extra arguments: "<< std::endl << argv[optind]; 
     }
       
-	
+	delete obj;
 	
 	return 0;
 };
