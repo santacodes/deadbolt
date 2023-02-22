@@ -5,7 +5,7 @@
 #include <map>
 #include <unistd.h> //for (unix/linux)
 #include "filebackend.hpp"
-
+#include "headers/sqlite3.h"
 /*
 
 --- DOCUMENTATION ---
