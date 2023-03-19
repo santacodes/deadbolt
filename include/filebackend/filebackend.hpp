@@ -1,7 +1,7 @@
 #pragma once
 // To create and edit in the sqlite db
 #include <string>
-#include "headers/sqlite3.h"
+#include "../include/sqlite3.h"
 #include <iostream>
 
 
@@ -32,7 +32,11 @@ public:
     };
 
     void create()
-    {
+    {   
+        std::string entry = "INSERT INTO TABLE PASSWORDS("
+                          "ID INT PRIMARY KEY     NOT NULL, "
+                          "USERNAME           TEXT    NOT NULL, "
+                          "PASSWORD          TEXT     NOT NULL;";
         printf("created the file");
     };
     void append()
