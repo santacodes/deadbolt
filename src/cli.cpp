@@ -3,8 +3,8 @@
 #include <vector>
 #include <string>
 #include <map>
-#include "../include/filebackend/filebackend.hpp"
-#include "../include/sqlite/sqlite3.h"
+#include "include/filebackend/filebackend.hpp"
+#include "include/sqlite/sqlite3.h"
 /*
 
 --- DOCUMENTATION ---

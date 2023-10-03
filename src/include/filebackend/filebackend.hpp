@@ -1,7 +1,7 @@
 #pragma once
 // To create and edit in the sqlite db
 #include <string>
-#include "../include/sqlite3.h"
+#include "../sqlite/sqlite3.h"
 #include <iostream>
 
 

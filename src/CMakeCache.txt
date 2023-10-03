@@ -17,6 +17,10 @@
 //Path to a program.
 CMAKE_AR:FILEPATH=C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.36.32532/bin/Hostx64/x64/lib.exe
 
+//For backwards compatibility, what version of CMake commands and
+// syntax should this version of CMake try to support.
+CMAKE_BACKWARDS_COMPATIBILITY:STRING=2.4
+
 //Semicolon separated list of supported configuration types, only
 // supports Debug, Release, MinSizeRel, and RelWithDebInfo, anything
 // else will be ignored.
@@ -193,6 +197,12 @@ DEADBOLT_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 DEADBOLT_SOURCE_DIR:STATIC=C:/Users/shunm/OneDrive/Documents/deadbolt/src
+
+//Single output directory for building all executables.
+EXECUTABLE_OUTPUT_PATH:PATH=
+
+//Single output directory for building all libraries.
+LIBRARY_OUTPUT_PATH:PATH=
 
 //Value Computed by CMake
 Project_BINARY_DIR:STATIC=C:/Users/shunm/OneDrive/Documents/deadbolt/src
