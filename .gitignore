@@ -31,5 +31,13 @@
 *.out
 *.app
 
-#vscode files
+# vscode files
 .vscode
+
+# Other build files
+*.tlog
+*.pdb
+
+# Directories 
+Debug
+DEADBOLT.dir
