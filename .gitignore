@@ -37,8 +37,11 @@
 # Other build files
 *.tlog
 *.pdb
+*.log
 
 # Directories 
 Debug
 DEADBOLT.dir
 build
+
+

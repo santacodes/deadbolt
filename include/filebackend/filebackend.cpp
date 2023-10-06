@@ -4,7 +4,6 @@
 #include "sqlite/sqlite3.h"
 
 
-
 filebackend::filebackend() {
     sqlite3 *DB;
     std::string sql = "CREATE TABLE PASSWORDS("
