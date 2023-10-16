@@ -6,6 +6,7 @@
 #include <map>
 #include "filebackend/filebackend.hpp"
 #include "sqlite/sqlite3.h"
+#include "parser/parser.hpp"
 /*
 
 --- DOCUMENTATION ---
@@ -26,20 +27,11 @@ std::cout << "List of arguments - " << std::endl;
 int main(int argc, char *argv[])
 {
 
-    std::cout << "works";
 
-//   filebackend obj;
-//    obj.append();
-    // Parser 
-    std::cout << "Argument count" << argc << std::endl;
-    std::cout << "The Arguments" << std::endl;
-    filebackend obj;
-    obj.create();
-    for(int i = 0; i < argc; i++) {
-
-        std::cout << argv[i] << std::endl;
+    parser par;
+    par.options(argc, argv);
 
 
-    } 
+
     return 0;
 };
