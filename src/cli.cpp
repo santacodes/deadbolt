@@ -27,10 +27,13 @@ std::cout << "List of arguments - " << std::endl;
 int main(int argc, char *argv[])
 {
 
-
+    std::vector<std::string> args;
+    std::vector<std::string>::iterator ptr; 
     parser par;
-    par.options(argc, argv);
-
+    args = *par.options(argc, argv);
+    
+    for(ptr = args.begin(); ptr < args.end(); ptr++) 
+        std::cout << *ptr << " ";
 
 
     return 0;
