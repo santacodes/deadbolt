@@ -4,35 +4,20 @@
 #include "sqlite/sqlite3.h"
 
 
-filebackend::filebackend() {
-    sqlite3 *DB;
-    std::string sql = "CREATE TABLE PASSWORDS("
-                        "ID INT PRIMARY KEY     NOT NULL, "
-                        "USERNAME           TEXT    NOT NULL, "
-                        "PASSWORD          TEXT     NOT NULL;";
-    int exit = 0;
-    exit = sqlite3_open("pwd.db", &DB);
-    char *messaggeError;
-    exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messaggeError);
+filebackend::filebackend(std::vector<std::string> *args) {
 
-    if (exit != SQLITE_OK)
-    {
-        std::cerr << "Error Create Table" << std::endl;
-        sqlite3_free(messaggeError);
+    std::cout << "works";
+    this->functions = args;
+    std::vector<std::string>::iterator ptr; 
+    for(ptr = args->begin(); ptr < args->end(); ptr++) {
+        std::cout << *ptr << std::endl;
     }
-    else
-        std::cout << "Table created Successfully" << std::endl;
-    sqlite3_close(DB);
-    std::cout << "Closed";
-
+    
 }
 
 void filebackend::create() {   
-    std::string entry = "INSERT INTO TABLE PASSWORDS("
-                        "ID INT PRIMARY KEY     NOT NULL, "
-                        "USERNAME           TEXT    NOT NULL, "
-                        "PASSWORD          TEXT     NOT NULL;";
-    printf("created the file");
+    // Make a keyring to store the password hash and map them to the variable 
+    ;
 }
 
 void filebackend::append() {

@@ -1,6 +1,6 @@
-C:/Users/shunm/OneDrive/Documents/deadbolt/build/CMakeFiles/backend.dir
-C:/Users/shunm/OneDrive/Documents/deadbolt/build/CMakeFiles/mysqlite.dir
-C:/Users/shunm/OneDrive/Documents/deadbolt/build/CMakeFiles/parser.dir
-C:/Users/shunm/OneDrive/Documents/deadbolt/build/CMakeFiles/DEADBOLT.dir
-C:/Users/shunm/OneDrive/Documents/deadbolt/build/CMakeFiles/edit_cache.dir
-C:/Users/shunm/OneDrive/Documents/deadbolt/build/CMakeFiles/rebuild_cache.dir
+/home/santa/Github/deadbolt/build/CMakeFiles/backend.dir
+/home/santa/Github/deadbolt/build/CMakeFiles/mysqlite.dir
+/home/santa/Github/deadbolt/build/CMakeFiles/parser.dir
+/home/santa/Github/deadbolt/build/CMakeFiles/DEADBOLT.dir
+/home/santa/Github/deadbolt/build/CMakeFiles/edit_cache.dir
+/home/santa/Github/deadbolt/build/CMakeFiles/rebuild_cache.dir

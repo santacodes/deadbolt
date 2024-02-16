@@ -25,12 +25,13 @@ std::vector<std::string>* parser::options(int size, char *cmdinput[]) {
 			
 			arg = cmdinput[i];
 			arg.erase(0,1);
-			std::cout << arg << std::endl;
+			if(cmdinput[i][1] == '-') arg.erase(0,1);
 			args.push_back(arg);
 			node.argument = arg;
 			nodes.push_back(node);
     
 		}
+
 	}
 
 	return &args;
