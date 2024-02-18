@@ -30,14 +30,14 @@ int main(int argc, char *argv[])
     if (argc < 2) std::cout << "Invalid Operation, use `Deadbolt --help` to get started";
     else {
 
-        std::vector<std::string> args;
+        std::map<std::string, std::string> args;
         std::vector<std::string>::iterator ptr;
         parser par;
 
 
         // Processing the arguments and returning a string array of the args
         args = *par.options(argc, argv);
-
+        
         // Calling the backend to store and make an entry
         //filebackend fb(&args);
 
