@@ -2,7 +2,6 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include <list>
 #include <map>
 #include "filebackend/filebackend.hpp"
 #include "sqlite/sqlite3.h"
@@ -27,20 +26,20 @@ std::cout << "List of arguments - " << std::endl;
 int main(int argc, char *argv[])
 {
     std::cout << "Welcome to Deadbolt!" << std::endl;
-    
-    if(argc < 2) std::cout << "Invalid Operation, use `Deadbolt --help` to get started";
+
+    if (argc < 2) std::cout << "Invalid Operation, use `Deadbolt --help` to get started";
     else {
-        
+
         std::vector<std::string> args;
-        std::vector<std::string>::iterator ptr; 
+        std::vector<std::string>::iterator ptr;
         parser par;
-        
+
 
         // Processing the arguments and returning a string array of the args
         args = *par.options(argc, argv);
-        
-        // Calling the backend to store and make an entry 
-        filebackend fb(&args);
+
+        // Calling the backend to store and make an entry
+        //filebackend fb(&args);
 
     }
 

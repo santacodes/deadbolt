@@ -1,21 +1,22 @@
 #include <string>
 #include <vector>
+#include <map>
 #ifndef PARSER
-#define PARSER 
+#define PARSER
 
 
 class parser {
-public: 
-	
-	struct node{
+public:
+
+	struct node {
 
 		std::string argument;
 		std::string note;
 
 	};
 
-	std::vector<std::string>* options(int size,char *cmdinput[]);
-	
+	std::vector<std::string>* options(int size, char *cmdinput[]);
+
 };
 
 #endif

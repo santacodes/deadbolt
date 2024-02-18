@@ -6,17 +6,18 @@
 
 filebackend::filebackend(std::vector<std::string> *args) {
 
-    std::cout << "works";
     this->functions = args;
-    std::vector<std::string>::iterator ptr; 
-    for(ptr = args->begin(); ptr < args->end(); ptr++) {
+    std::vector<std::string>::iterator ptr;
+
+    for (ptr = functions->begin(); ptr < functions->end(); ptr++) {
         std::cout << *ptr << std::endl;
+
     }
-    
+
 }
 
-void filebackend::create() {   
-    // Make a keyring to store the password hash and map them to the variable 
+void filebackend::create() {
+    // Make a keyring to store the password hash and map them to the variable
     ;
 }
 
