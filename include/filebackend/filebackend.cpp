@@ -2,7 +2,6 @@
 #include <iostream>
 #include <map>
 #include "filebackend/filebackend.hpp"
-#include "sqlite/sqlite3.h"
 
 
 filebackend::filebackend(std::map<std::string, std::string> *args) {
