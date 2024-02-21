@@ -7,8 +7,7 @@
 filebackend::filebackend(std::map<std::string, std::string> *args) {
 
     this->functions = args;
-
-
+    std::cout << args;
 }
 
 void filebackend::create() {

@@ -33,16 +33,15 @@ int main(int argc, char *argv[])
         std::vector<std::string>::iterator ptr;
         parser par;
 
-
+        
         // Processing the arguments and returning a string array of the args
         args = *par.options(argc, argv);
-        filebackend fbackend; 
+        filebackend fbackend(&args); 
 
         // Calling the backend to store and make an entry
         
 
     }
-
 
     return 0;
 };
