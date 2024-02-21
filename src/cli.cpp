@@ -6,6 +6,7 @@
 #include "filebackend/filebackend.hpp"
 #include "sqlite/sqlite3.h"
 #include "parser/parser.hpp"
+#include "filebackend/filebackend.hpp"
 /*
 
 --- DOCUMENTATION ---
@@ -37,9 +38,10 @@ int main(int argc, char *argv[])
 
         // Processing the arguments and returning a string array of the args
         args = *par.options(argc, argv);
-        
+        filebackend fbackend; 
+
         // Calling the backend to store and make an entry
-        //filebackend fb(&args);
+        
 
     }
 

@@ -49,10 +49,12 @@ std::map<std::string, std::string>* parser::options(int size, char *cmdinput[]) 
 		}
 
 	}
+
+	args.clear();
 	std::cout << "This is the hashmap" << std::endl;
 	for (auto x : processed_argument)
 		std::cout << x.first << " " << x.second << std::endl;
-
+	
 	return &processed_argument;
 }
 

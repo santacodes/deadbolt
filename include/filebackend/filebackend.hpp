@@ -6,14 +6,14 @@
 
 class filebackend {
     public:
-        filebackend(std::vector<std::string>*);
+        filebackend(std::map<std::string, std::string>*);
 
     private:
         
         void create();
         void append();
         void del();
-        std::vector<std::string> *functions; 
+        std::map<std::string, std::string> *functions; 
 
         
 };

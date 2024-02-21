@@ -1,18 +1,14 @@
 #include <string>
 #include <iostream>
+#include <map>
 #include "filebackend/filebackend.hpp"
 #include "sqlite/sqlite3.h"
 
 
-filebackend::filebackend(std::vector<std::string> *args) {
+filebackend::filebackend(std::map<std::string, std::string> *args) {
 
     this->functions = args;
-    std::vector<std::string>::iterator ptr;
 
-    for (ptr = functions->begin(); ptr < functions->end(); ptr++) {
-        std::cout << *ptr << std::endl;
-
-    }
 
 }
 
