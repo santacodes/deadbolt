@@ -6,8 +6,22 @@
 
 filebackend::filebackend(std::map<std::string, std::string> *args) {
 
-    this->functions = args;
-    std::cout << args;
+    this->functions = *args;
+    
+    // Doing Checks here to validate the argument data
+    if (functions["n"] != "" || functions["new"] != "") std::cout << "New file not null";
+    else std::cout << "No file name mentioned"; 
+    
+    if (functions["e"] != "" || functions["edit"] != "") std::cout << "Edit file not null";
+    else ;
+  
+    if (functions["l"] != "" || functions["list"] != "") std::cout << "List file not null";
+    else ;
+
+
+    if (functions["d"] != "" || functions["delete"] != "") std::cout << "Delete file not null";
+    else ;
+
 }
 
 void filebackend::create() {

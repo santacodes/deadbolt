@@ -1,5 +1,0 @@
-/home/santa/Github/deadbolt/build/CMakeFiles/backend.dir
-/home/santa/Github/deadbolt/build/CMakeFiles/parser.dir
-/home/santa/Github/deadbolt/build/CMakeFiles/DEADBOLT.dir
-/home/santa/Github/deadbolt/build/CMakeFiles/edit_cache.dir
-/home/santa/Github/deadbolt/build/CMakeFiles/rebuild_cache.dir

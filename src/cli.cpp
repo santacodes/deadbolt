@@ -9,15 +9,12 @@
 
 --- DOCUMENTATION ---
 
-class options{
-    bool --help;
-    std::string --greeting = "Hello";
-    unsigned int --exclamations = 1;
-std::cout << "List of arguments - " << std::endl;
-                std::cout << "-c, -C, --create => To Create a new Encrypted note" << std::endl;
-                std::cout << "-e, -E, --edit => To edit an existing note" << std::endl;
-                std::cout << "-d, -D, --delete => To delete an exsiting note" << std::endl;
+Operations that can be performed 
 
+  New entry (-n || --new) : To create a new entry to store a key
+  List (-l || --list) : To list all the entries present
+  Edit (-e || --edit) : To edit the already present keys 
+  Delete (-e || --delete) : To delete the key 
 
 };*/
 

@@ -40,8 +40,8 @@
 *.log
 
 # Directories 
-Debug
-DEADBOLT.dir
-build
+Debug/
+DEADBOLT.dir/
+build/
 
 
