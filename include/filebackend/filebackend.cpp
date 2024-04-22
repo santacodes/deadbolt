@@ -10,7 +10,7 @@ filebackend::filebackend(std::map<std::string, std::string> *args) {
 
   // Doing Checks here to validate the argument data
   if (functions["n"] != "" || functions["new"] != "") {
-    std::cout << "New file not null";
+    std::cout << "work in progress";
   } else
     std::cout << "No file name mentioned";
 
@@ -32,7 +32,14 @@ filebackend::filebackend(std::map<std::string, std::string> *args) {
 
 void filebackend::create() {
   // Make a keyring to store the password hash and map them to the variable
-  ;
+  // https://man7.org/linux/man-pages/man2/add_key.2.html
+
+  int keyvalue =
+      add_key("user", "this is a sample key", "facebook key", size_t 20, 10239);
+  if (keyvalue == 0)
+    std::cout << "error";
+  else
+    std::cout << "created a keyring successfully";
 }
 
 void filebackend::append() { printf("Appending to the file.."); }

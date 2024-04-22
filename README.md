@@ -1,5 +1,5 @@
 # deadbolt
-A Local Password Manager with Encryption 
+A Local Password Manager with Encryption using linux keyrings
 ## Source installation
 
 To build from source - 
