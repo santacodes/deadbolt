@@ -1,8 +1,7 @@
 #include <map>
 #include <string>
-#include <vector>
-#ifndef PARSER
-#define PARSER
+#ifndef PARSER_H
+#define PARSER_H
 
 class parser {
 public:

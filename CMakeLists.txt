@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.28.3)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-project(DEADBOLT CXX C)
+project(deadbolt CXX C)
 
 
 add_library(
@@ -17,12 +17,20 @@ add_library(
 
 )
 
+add_library(
+
+    keyapi STATIC 
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/keyapi/keyapi.c
+
+
+)
 
 target_include_directories(backend PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_include_directories(parser PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/src/cli.cpp)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(backend parser)
+target_link_libraries(backend parser keyapi)
 target_link_libraries(${PROJECT_NAME} backend)
 target_link_libraries(${PROJECT_NAME} parser)
+target_link_libraries(${PROJECT_NAME} keyapi)
