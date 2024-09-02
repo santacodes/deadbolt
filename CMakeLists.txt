@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28.3)
+cmake_minimum_required(VERSION 3.30.2)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 project(deadbolt CXX C)
 
@@ -25,6 +25,14 @@ add_library(
 
 )
 
+include(FetchContent)
+set(FETCHCONTENT_UPDATES_DISCONNECTED TRUE)
+FetchContent_Declare(ftxui
+  GIT_REPOSITORY https://github.com/ArthurSonzogni/ftxui
+  GIT_TAG main # Important: Specify a version or a commit hash here.
+)
+FetchContent_MakeAvailable(ftxui)
+
 target_include_directories(backend PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_include_directories(parser PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/src/cli.cpp)
@@ -34,3 +42,7 @@ target_link_libraries(backend parser keyapi)
 target_link_libraries(${PROJECT_NAME} backend)
 target_link_libraries(${PROJECT_NAME} parser)
 target_link_libraries(${PROJECT_NAME} keyapi)
+target_link_libraries(${PROJECT_NAME} 
+  PRIVATE ftxui::screen
+  PRIVATE ftxui::dom
+)

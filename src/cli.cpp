@@ -1,5 +1,7 @@
 #include "filebackend/filebackend.hpp"
 #include "parser/parser.hpp"
+#include <ftxui/dom/elements.hpp>
+#include <ftxui/screen/screen.hpp>
 #include <iostream>
 #include <map>
 #include <string>
