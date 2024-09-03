@@ -10,19 +10,13 @@ add_library(
 
 
 add_library(
-
     parser STATIC 
     ${CMAKE_CURRENT_SOURCE_DIR}/include/parser/parser.cpp
-
-
 )
 
 add_library(
-
     keyapi STATIC 
     ${CMAKE_CURRENT_SOURCE_DIR}/include/keyapi/keyapi.c
-
-
 )
 
 include(FetchContent)
@@ -39,10 +33,11 @@ add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/src/cli.cpp)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_link_libraries(backend parser keyapi)
-target_link_libraries(${PROJECT_NAME} backend)
-target_link_libraries(${PROJECT_NAME} parser)
-target_link_libraries(${PROJECT_NAME} keyapi)
-target_link_libraries(${PROJECT_NAME} 
-  PRIVATE ftxui::screen
-  PRIVATE ftxui::dom
-)
+target_link_libraries(${PROJECT_NAME} PRIVATE backend)
+target_link_libraries(${PROJECT_NAME} PRIVATE parser)
+target_link_libraries(${PROJECT_NAME} PRIVATE keyapi)
+target_link_libraries(${PROJECT_NAME} PRIVATE ftxui::screen)
+target_link_libraries(${PROJECT_NAME} PRIVATE ftxui::dom)
+target_link_libraries(${PROJECT_NAME} PRIVATE ftxui::component)
+
+

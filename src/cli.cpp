@@ -1,6 +1,5 @@
 #include "filebackend/filebackend.hpp"
 #include "parser/parser.hpp"
-#include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/screen.hpp>
 #include <iostream>
 #include <map>
@@ -23,8 +22,21 @@ Operations that can be performed
 int main(int argc, char *argv[]) {
   std::cout << "Welcome to Deadbolt!" << std::endl;
 
-  if (argc < 2)
+  if (argc < 2) {
+    auto screen = ftxui::Screen::Create(ftxui::Dimension::Fixed(32),
+                                        ftxui::Dimension::Fixed(10));
+
+    auto &pixel = screen.PixelAt(9, 9);
+    pixel.character = U'D';
+    pixel.bold = true;
+    pixel.foreground_color = ftxui::Color::Blue;
+
+    std::cout << screen.ToString();
+    return EXIT_SUCCESS;
     std::cout << "Invalid Operation, use `Deadbolt --help` to get started";
+
+  }
+
   else {
 
     std::map<std::string, std::string> args;
