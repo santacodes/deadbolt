@@ -1,7 +1,8 @@
 #include "filebackend/filebackend.hpp"
 #include <iostream>
+#include <keyapi/keyapi.h>
 #include <map>
-#include <string>
+#include <stdio.h>
 
 filebackend::filebackend(std::map<std::string, std::string> *args) {
 
@@ -10,6 +11,16 @@ filebackend::filebackend(std::map<std::string, std::string> *args) {
   // Doing Checks here to validate the argument data
   if (functions["n"] != "" || functions["new"] != "") {
     std::cout << "work in progress";
+#ifdef __cplusplus
+    extern "C" {
+#endif
+
+    // your normal definitions here
+
+#ifdef __cplusplus
+    }
+#endif
+
   } else
     std::cout << "No file name mentioned";
 

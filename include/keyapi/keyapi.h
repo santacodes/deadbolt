@@ -4,4 +4,6 @@
 #include <stdio.h>
 #include <string.h>
 
+void createkey(char keyname[], char keyhash[]);
+
 #endif

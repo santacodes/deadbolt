@@ -1,3 +1,4 @@
+#include <keyapi/keyapi.h>
 #include <keyutils.h>
 #include <map>
 #include <string>

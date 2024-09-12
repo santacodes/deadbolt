@@ -22,6 +22,7 @@ Operations that can be performed
 int main(int argc, char *argv[]) {
   std::cout << "Welcome to Deadbolt!" << std::endl;
 
+  // Only run the TUI when there are no arguments mentioned
   if (argc < 2) {
     auto screen = ftxui::Screen::Create(ftxui::Dimension::Fixed(32),
                                         ftxui::Dimension::Fixed(10));

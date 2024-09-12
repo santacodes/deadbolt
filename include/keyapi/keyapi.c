@@ -5,15 +5,15 @@
 
 #define KEYRING "deadbolt"
 
-void create() {
+void createkey(char keyname[], char keyhash[]) {
   // Make a keyring to store the password hash and map them to the variable
   // https://man7.org/linux/man-pages/man2/add_key.2.html
   key_serial_t keyring;
   key_serial_t key;
   key_serial_t requested_key;
   const char *keyring_name = KEYRING;
-  const char *key_name = "my_key";
-  const char *key_data = "my_secret_data";
+  const char *key_name = keyname;
+  const char *key_data = keyhash;
   size_t key_data_len = sizeof(*key_data);
 
   // Create a new keyring
