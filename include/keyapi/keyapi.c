@@ -1,8 +1,8 @@
 #include <keyutils.h>
+#include <libsecret-1/libsecret/secret.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #define KEYRING "deadbolt"
 
 void createkey(char keyname[], char keyhash[]) {
