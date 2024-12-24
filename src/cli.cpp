@@ -1,5 +1,6 @@
 #include "filebackend/filebackend.hpp"
 #include "parser/parser.hpp"
+#include "tui/tui.hpp"
 #include <ftxui/screen/screen.hpp>
 #include <iostream>
 #include <map>
@@ -24,18 +25,7 @@ int main(int argc, char *argv[]) {
 
   // Only run the TUI when there are no arguments mentioned
   if (argc < 2) {
-    auto screen = ftxui::Screen::Create(ftxui::Dimension::Fixed(32),
-                                        ftxui::Dimension::Fixed(10));
-
-    auto &pixel = screen.PixelAt(9, 9);
-    pixel.character = U'D';
-    pixel.bold = true;
-    pixel.foreground_color = ftxui::Color::Blue;
-
-    std::cout << screen.ToString();
-    return EXIT_SUCCESS;
-    std::cout << "Invalid Operation, use `Deadbolt --help` to get started";
-
+    Tui::tui();
   }
 
   else {

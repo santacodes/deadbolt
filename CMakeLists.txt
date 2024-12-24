@@ -43,6 +43,12 @@ target_link_libraries(keyapi PUBLIC
     ${LIBSECRET_LIBRARIES} # Link libsecret
     ${GLIB_LIBRARIES}      # Link GLib
 )
+# TUI library (requires ftxui)
+add_library(tui STATIC ${INCLUDE_DIR}/tui/tui.cpp)
+target_include_directories(tui PUBLIC
+    ${INCLUDE_DIR}
+    ${ftxui_SOURCE_DIR}/include
+)
 
 # Main executable
 add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/src/cli.cpp)
@@ -58,6 +64,7 @@ target_link_libraries(backend PUBLIC parser keyapi)
 
 # Link libraries to the main executable
 target_link_libraries(${PROJECT_NAME} 
+    PRIVATE tui
     PRIVATE backend
     PRIVATE ftxui::screen
     PRIVATE ftxui::dom
