@@ -2,6 +2,7 @@
 #include <ftxui/component/component.hpp>   // For Renderer, Button, Input, etc.
 #include <ftxui/component/screen_interactive.hpp>  // For ScreenInteractive
 #include <ftxui/dom/elements.hpp>  // For text, hbox, vbox, border
+#include <iostream>
 
 using namespace ftxui;
 
@@ -18,7 +19,8 @@ int Tui::tui() {
   std::string new_service, new_key;
 
   // TOTP Display Section
-  auto totp_display = Renderer([&] {
+  auto totp_entries = Container::Vertical({});
+  auto totp_display = Renderer(totp_entries, [&] {
     Elements rows;
     for (const auto& credential : credentials) {
       rows.push_back(
@@ -36,12 +38,18 @@ int Tui::tui() {
   auto key_input = Input(&new_key, "Key");
   auto add_button = Button("Add Entry", [&] {
     if (!new_service.empty() && !new_key.empty()) {
+      std::cout << new_service << new_key <<std::endl;
       credentials.emplace_back(new_service, new_key);
       new_service.clear();
       new_key.clear();
     }
   });
-  auto new_entry_box = Renderer([&] {
+  auto new_entry_box = Container::Vertical({
+      service_input,
+      key_input,
+      add_button,
+  });
+  auto new_entry_renderer = Renderer(new_entry_box, [&] {
     return vbox({
                text("Add New Entry:") | bold | color(Color::Yellow),
                hbox(text("Service: "), service_input->Render()) | border,
@@ -54,8 +62,9 @@ int Tui::tui() {
   // Export Section
   auto export_button = Button("Export Keys", [&] {
     // Placeholder for export functionality
+    std::cout << "exporting keys";
   });
-  auto export_box = Renderer([&] {
+  auto export_box = Renderer(export_button, [&] {
     return vbox({
                text("Export Keys:") | bold | color(Color::Yellow),
                export_button->Render() | center,
@@ -64,23 +73,23 @@ int Tui::tui() {
   });
 
   // Main Layout
-  auto container = Container::Horizontal({
-      totp_display,
+  auto main_container = Container::Horizontal({
+      totp_entries,
       new_entry_box,
-      export_box,
+      export_button,
   });
 
-  auto renderer = Renderer(container, [&] {
+  auto main_renderer = Renderer(main_container, [&] {
     return hbox({
         totp_display->Render(),
-        new_entry_box->Render(),
+        new_entry_renderer->Render(),
         export_box->Render(),
     });
   });
 
   // Screen setup
   auto screen = ScreenInteractive::TerminalOutput();
-  screen.Loop(renderer);
+  screen.Loop(main_renderer);
 
   return 0;
 }
