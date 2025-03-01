@@ -8,13 +8,6 @@ project(deadbolt LANGUAGES CXX C)
 include(FetchContent)
 set(FETCHCONTENT_UPDATES_DISCONNECTED TRUE)
 
-# Fetch FTXUI library
-FetchContent_Declare(
-    ftxui
-    GIT_REPOSITORY https://github.com/ArthurSonzogni/ftxui
-    GIT_TAG main # Use a specific commit hash or release version for stability
-)
-FetchContent_MakeAvailable(ftxui)
 
 # Locate libsecret and GLib using pkg-config
 find_package(PkgConfig REQUIRED)
@@ -43,13 +36,6 @@ target_link_libraries(keyapi PUBLIC
     ${LIBSECRET_LIBRARIES} # Link libsecret
     ${GLIB_LIBRARIES}      # Link GLib
 )
-# TUI library (requires ftxui)
-add_library(tui STATIC ${INCLUDE_DIR}/tui/tui.cpp)
-target_include_directories(tui PUBLIC
-    ${INCLUDE_DIR}
-    ${ftxui_SOURCE_DIR}/include
-)
-
 # Main executable
 add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/src/cli.cpp)
 target_include_directories(${PROJECT_NAME} PRIVATE 
@@ -66,9 +52,6 @@ target_link_libraries(backend PUBLIC parser keyapi)
 target_link_libraries(${PROJECT_NAME} 
     PRIVATE tui
     PRIVATE backend
-    PRIVATE ftxui::screen
-    PRIVATE ftxui::dom
-    PRIVATE ftxui::component
     PRIVATE ${LIBSECRET_LIBRARIES} # Link libsecret
     PRIVATE ${GLIB_LIBRARIES} # Link GLib
 )

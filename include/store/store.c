@@ -60,6 +60,7 @@ int getKey(char Site[]) {
   char *key = fetch_totp_key(Site);
   if (key) {
     printf("Retrieved Key 1: %s\n", key);
+    // secret_password_free(key); // Free the returned key
   }
 
   return 0;
