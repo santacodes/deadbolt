@@ -1,73 +1,104 @@
-#include <libsecret-1/libsecret/secret.h>
+#include "store.h"
+#include <libsecret/secret.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-// Schema for storing TOTP keys
-static const SecretSchema TOTP_KEY_SCHEMA = {
-    "com.example.TOTP.Key",
-    SECRET_SCHEMA_NONE,
-    {
-        {"account", SECRET_SCHEMA_ATTRIBUTE_STRING},
-        {"NULL", 0},
+#define APP_NAME "deadbolt"
+#define SCHEMA_NAME "org.deadbolt.totp"
+#define DEFAULT_COLLECTION "default"
+
+// Global schema definition for deadbolt
+static const SecretSchema totp_schema = {
+    .name = SCHEMA_NAME,
+    .flags = SECRET_SCHEMA_NONE,
+    .attributes = {
+        {"service", SECRET_SCHEMA_ATTRIBUTE_STRING},
+        {"username", SECRET_SCHEMA_ATTRIBUTE_STRING},
+        {NULL, 0},
     }};
 
-// Function to store a TOTP key in Libsecret
-void store_totp_key(const char *account, const char *key) {
+int totp_store_key(const char *service_name, const char *username,
+                   const char *totp_key) {
   GError *error = NULL;
+  gboolean result;
 
-  // Store the key securely in Libsecret
-  secret_password_store_sync(&TOTP_KEY_SCHEMA, SECRET_COLLECTION_DEFAULT,
-                             "TOTP Key", key,
-                             NULL, // Cancellable
-                             &error, "account", account,
-                             NULL); // End of attributes
+  result = secret_password_store_sync(
+      &totp_schema,            // The schema
+      DEFAULT_COLLECTION,      // Default collection
+      service_name,            // Label for the secret
+      totp_key,                // The secret (TOTP key)
+      NULL,                    // No cancellable object
+      &error,                  // Error pointer
+      "service", service_name, // Attribute: service name
+      "username", username,    // Attribute: username
+      NULL                     // End of attributes
+  );
 
   if (error != NULL) {
-    fprintf(stderr, "Error storing key: %s\n", error->message);
+    fprintf(stderr, "Error storing TOTP key: %s\n", error->message);
     g_error_free(error);
-  } else {
-    printf("Key for account '%s' stored successfully.\n", account);
-  }
-}
-
-// Function to fetch a TOTP key from Libsecret
-char *fetch_totp_key(const char *account) {
-  GError *error = NULL;
-
-  // Retrieve the key securely from Libsecret
-  char *key = secret_password_lookup_sync(&TOTP_KEY_SCHEMA,
-                                          NULL, // Cancellable
-                                          &error, "account", account,
-                                          NULL); // End of attributes
-
-  if (error != NULL) {
-    fprintf(stderr, "Error fetching key: %s\n", error->message);
-    g_error_free(error);
-    return NULL;
+    return 1;
   }
 
-  if (key == NULL) {
-    printf("No key found for account '%s'.\n", account);
-    return NULL;
-  }
-
-  printf("Key for account '%s' retrieved successfully.\n", account);
-  return key;
-}
-
-int getKey(char Site[]) {
-  char *key = fetch_totp_key(Site);
-  if (key) {
-    printf("Retrieved Key 1: %s\n", key);
-    // secret_password_free(key); // Free the returned key
+  if (!result) {
+    fprintf(stderr, "Failed to store TOTP key for unknown reason\n");
+    return 1;
   }
 
   return 0;
 }
-// have to add error handling
-int Store(char Site[], char key[]) {
-  // Store TOTP keys
-  store_totp_key(Site, key);
+
+char *totp_retrieve_key(const char *service_name, const char *username) {
+  GError *error = NULL;
+  char *totp_key;
+
+  totp_key = secret_password_lookup_sync(
+      &totp_schema,            // The schema
+      NULL,                    // No cancellable object
+      &error,                  // Error pointer
+      "service", service_name, // Attribute: service name
+      "username", username,    // Attribute: username
+      NULL                     // End of attributes
+  );
+
+  if (error != NULL) {
+    fprintf(stderr, "Error retrieving TOTP key: %s\n", error->message);
+    g_error_free(error);
+    return NULL;
+  }
+
+  return totp_key; // Caller must free this with totp_free_key()
+}
+
+void totp_free_key(char *totp_key) {
+  if (totp_key != NULL) {
+    secret_password_free(totp_key);
+  }
+}
+
+int totp_delete_key(const char *service_name, const char *username) {
+  GError *error = NULL;
+  gboolean result;
+
+  result = secret_password_clear_sync(
+      &totp_schema,            // The schema
+      NULL,                    // No cancellable object
+      &error,                  // Error pointer
+      "service", service_name, // Attribute: service name
+      "username", username,    // Attribute: username
+      NULL                     // End of attributes
+  );
+
+  if (error != NULL) {
+    fprintf(stderr, "Error deleting TOTP key: %s\n", error->message);
+    g_error_free(error);
+    return 1;
+  }
+
+  if (!result) {
+    return 1;
+  }
+
   return 0;
 }
