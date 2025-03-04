@@ -1,3 +1,15 @@
+/*
+ * This is a SIMD implementation of HMAC-SHA1 based TOTP generation algorithm.
+ * For reference refer RFC - 6238 https://datatracker.ietf.org/doc/html/rfc6238.
+ * This file computes multiple TOTPs using vectorized batches of secrets with
+ * the same instruction set. While this might not impact performance a lot on a
+ * personal computer, it might create a significant difference in a distributed
+ * system.
+ * Anyway, a SIMD instruction would reduce the number of cycles in the CPU
+ * hence reducing the energy consumption and number of instruction sets overall.
+ *
+ */
+
 #include <algorithm>
 #include <cctype>
 #include <ctime>
