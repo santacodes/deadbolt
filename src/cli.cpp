@@ -1,10 +1,9 @@
-#include "filebackend/filebackend.hpp"
 #include "parser/parser.hpp"
-#include "tui/tui.hpp"
-#include <ftxui/screen/screen.hpp>
 #include <iostream>
 #include <map>
+#include <store/store_wrapper.hpp>
 #include <string>
+#include <totp/totp.hpp>
 #include <vector>
 /*
 
@@ -23,23 +22,21 @@ Operations that can be performed
 int main(int argc, char *argv[]) {
   std::cout << "Welcome to Deadbolt!" << std::endl;
 
-  // Only run the TUI when there are no arguments mentioned
-  if (argc < 2) {
-    Tui::tui();
-  }
+  std::vector<std::string> secrets = {
+      "2FASTEST", "YESMAN",
+      "NOMAN"}; // Initialise a vector and pass it to get the otps
+  totp obj = totp();
+  obj.fetch_totps(secrets);
 
-  else {
+  std::map<std::string, std::string> args;
+  std::vector<std::string>::iterator ptr;
+  parser par;
 
-    std::map<std::string, std::string> args;
-    std::vector<std::string>::iterator ptr;
-    parser par;
+  // Processing the arguments and returning a string array of the args
+  args = *par.options(argc, argv);
+  // filebackend fbackend(&args);
 
-    // Processing the arguments and returning a string array of the args
-    args = *par.options(argc, argv);
-    filebackend fbackend(&args);
-
-    // Calling the backend to store and make an entry
-  }
+  // Calling the backend to store and make an entry
 
   return 0;
 };

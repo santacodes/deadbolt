@@ -1,22 +1,35 @@
 cmake_minimum_required(VERSION 3.16)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Project setup
 project(deadbolt LANGUAGES CXX C)
 
-# Locate libsecret and GLib using pkg-config
+find_package(OpenSSL REQUIRED)
+
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBSECRET REQUIRED libsecret-1)
 pkg_check_modules(GLIB REQUIRED glib-2.0)
 
-# Allow users to provide their own xsimd path
-set(XSIMD_PATH "" CACHE PATH "Path to xsimd include directory")
+# Search simd paths
+set(XSIMD_SEARCH_PATHS
+    ${XSIMD_PATH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/xsimd
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/xsimd/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/.local/include/xsimd
+    /usr/local/include/xsimd
+    /usr/include/xsimd
+)
 
-# Fallback to local path if not set
-if(NOT XSIMD_PATH)
-    set(XSIMD_PATH ${CMAKE_CURRENT_SOURCE_DIR}/external/xsimd/include)
+# Find xsimd header
+find_path(XSIMD_INCLUDE_DIR 
+    NAMES xsimd/xsimd.hpp
+    PATHS ${XSIMD_SEARCH_PATHS}
+    PATH_SUFFIXES include
+)
+
+# Check if xsimd was found
+if(NOT XSIMD_INCLUDE_DIR)
+    message(FATAL_ERROR "xsimd headers not found. Please specify XSIMD_PATH or ensure xsimd is installed.")
 endif()
-# Include xsimd (header-only, so no linking required)
 
 # Include directories
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -25,9 +38,16 @@ set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 add_library(totp STATIC 
     ${INCLUDE_DIR}/totp/totp.cpp
 )
-target_include_directories(totp PUBLIC ${INCLUDE_DIR})
+target_include_directories(totp PUBLIC 
+    ${INCLUDE_DIR}
+    ${XSIMD_INCLUDE_DIR}
+    ${OPENSSL_INCLUDE_DIR}
+)
+target_link_libraries(totp PUBLIC 
+    OpenSSL::Crypto
+)
 
-# Store library (for TOTP key storage with libsecret)
+# TOTP key storage with libsecret
 add_library(store STATIC 
     ${INCLUDE_DIR}/store/store.c
 )
@@ -45,10 +65,15 @@ target_link_libraries(store PUBLIC
 add_library(parser STATIC 
     ${INCLUDE_DIR}/parser/parser.cpp
 )
-target_include_directories(parser PUBLIC ${INCLUDE_DIR})
-target_link_libraries(parser PUBLIC store totp)
+target_include_directories(parser PUBLIC 
+    ${INCLUDE_DIR}
+    ${XSIMD_INCLUDE_DIR}
+)
+target_link_libraries(parser PUBLIC 
+    store 
+    totp
+)
 
-# Ensure we can find the compiled libraries
 link_directories(${LIBSECRET_LIBRARY_DIRS} ${GLIB_LIBRARY_DIRS})
 
 # Main executable
@@ -57,7 +82,10 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${INCLUDE_DIR}
     ${LIBSECRET_INCLUDE_DIRS}
     ${GLIB_INCLUDE_DIRS}
-    ${XSIMD_PATH} 
+    ${XSIMD_INCLUDE_DIR}
+    ${OPENSSL_INCLUDE_DIR}
 ) 
-target_link_libraries(${PROJECT_NAME} PRIVATE parser)
-
+target_link_libraries(${PROJECT_NAME} PRIVATE 
+    parser
+    OpenSSL::Crypto
+)
