@@ -1,6 +1,6 @@
-#include "parser/parser.hpp"
 #include <iostream>
 #include <map>
+#include <parser/parser.hpp>
 #include <store/store_wrapper.hpp>
 #include <string>
 #include <totp/totp.hpp>
@@ -27,7 +27,8 @@ int main(int argc, char *argv[]) {
       "NOMAN"}; // Initialise a vector and pass it to get the otps
   totp obj = totp();
   obj.fetch_totps(secrets);
-
+  SecretsManager::Check_Keyring_Exists();
+  SecretsManager::storeKey("github", "SECRETKEY123");
   std::map<std::string, std::string> args;
   std::vector<std::string>::iterator ptr;
   parser par;
