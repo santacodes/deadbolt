@@ -29,6 +29,8 @@ int main(int argc, char *argv[]) {
   obj.fetch_totps(secrets);
   SecretsManager::Check_Keyring_Exists();
   SecretsManager::storeKey("github", "SECRETKEY123");
+  std::string key = SecretsManager::retrieveKey("github");
+  std::cout << "This is the key" << key << std::endl;
   std::map<std::string, std::string> args;
   std::vector<std::string>::iterator ptr;
   parser par;
