@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define APP_NAME "deadbolt"
-#define SCHEMA_NAME "org.deadbolt.totp"
+#define APP_NAME "/org/freedesktop/secrets/collection/deadbolt"
+#define SCHEMA_NAME "org.example.deadbolt"
 
 // Global schema definition for deadbolt
 static const SecretSchema totp_schema = {
@@ -26,7 +26,7 @@ static void on_collection_created(GObject *source, GAsyncResult *res,
     g_printerr("Failed to create keyring: %s\n", error->message);
     g_clear_error(&error);
   } else {
-    g_print("Custom keyring 'my_custom_keyring' created successfully!\n");
+    g_print("Custom keyring 'deadbolt' created successfully!\n");
   }
 
   if (collection) {
@@ -61,7 +61,7 @@ int check_keyrings_exists() {
   if (!keyring_exists) {
     secret_collection_create(service,
                              APP_NAME, // Keyring name
-                             APP_NAME, // Keyring name alias
+                             NULL,     // Keyring name alias
                              SECRET_COLLECTION_CREATE_NONE, NULL,
                              on_collection_created, &error);
 

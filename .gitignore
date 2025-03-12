@@ -39,6 +39,9 @@
 *.pdb
 *.log
 
+# notes
+notes.txt
+
 # Directories 
 Debug/
 DEADBOLT.dir/
