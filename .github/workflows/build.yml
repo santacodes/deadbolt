@@ -1,0 +1,33 @@
+name: CMake Build
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: sudo apt update && sudo apt install -y cmake build-essential
+
+    - name: Configure CMake
+      run: cmake -S . -B build/ -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
+
+    - name: Build
+      run: |
+        cd build
+        make
+
+    - name: Test
+      working-directory: build
+      run: ctest -C ${{ env.BUILD_TYPE }}
