@@ -72,9 +72,14 @@ target_include_directories(parser PUBLIC
     ${INCLUDE_DIR}
     ${XSIMD_INCLUDE_DIR}
 )
+
+# Logger 
+add_library(logger ${INCLUDE_DIR}/logger/logger.cpp)
+
 target_link_libraries(parser PUBLIC 
     store 
     totp
+    logger
 )
 
 link_directories(${LIBSECRET_LIBRARY_DIRS} ${GLIB_LIBRARY_DIRS})
