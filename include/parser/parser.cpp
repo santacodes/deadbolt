@@ -1,16 +1,16 @@
 #include "parser/parser.hpp"
 #include <iostream>
-#include <map>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 // Global vector of stored arguments
 std::vector<std::string> args;
-std::map<std::string, std::string> processed_argument;
+std::unordered_map<std::string, std::string> processed_argument;
 // Global vector of nodes for arguments storage
 
-std::map<std::string, std::string> *parser::options(int size,
-                                                    char *cmdinput[]) {
+std::unordered_map<std::string, std::string> *
+Parser::options(int size, char *cmdinput[]) {
 
   /* Parser Options method is used to get the arguments of command line input
      Returns a vector of arguments passed in command line */
@@ -18,8 +18,8 @@ std::map<std::string, std::string> *parser::options(int size,
   std::string arg;
   std::vector<std::string> argument_vector;
 
-  // Sliding window to detect the operation and arguments of the operation and
-  // storing it in a node like hashmap
+  // Making a hashmap of all the argument and argument values from the
+  // string
 
   for (int i = 0; i < size; i++) {
 
@@ -40,8 +40,8 @@ std::map<std::string, std::string> *parser::options(int size,
 
           argument_vector.push_back(cmdinput[j]);
 
-          // change the string vector into one string and append to the hashmap
-          // value
+          // change the string vector into one string and append to the
+          // map value
           processed_argument[arg] += cmdinput[j];
         }
       }
