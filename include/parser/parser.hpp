@@ -10,7 +10,7 @@ public:
 
 private:
   static int
-  perform_operations(std::unordered_map<std::string, std::string> ops);
+  perform_operations(std::unordered_map<std::string, std::string> *ops);
 };
 
 #endif

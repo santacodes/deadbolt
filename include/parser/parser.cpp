@@ -1,5 +1,6 @@
 #include "parser/parser.hpp"
 #include <iostream>
+#include <store/store_wrapper.hpp>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -53,5 +54,17 @@ Parser::options(int size, char *cmdinput[]) {
   for (auto x : processed_argument)
     std::cout << x.first << " " << x.second
               << std::endl; // returns the hashmap of the key and argument
+  Parser::perform_operations(&processed_argument);
   return &processed_argument;
+}
+
+int Parser::perform_operations(
+    std::unordered_map<std::string, std::string> *ops) {
+  // n/new for new service
+  // g/get for get totp
+  // l/list to get all the totp
+  if ((*ops)["n"] != "" || (*ops)["new"] != "") {
+    SecretsManager::storeKey("service", "secret");
+  }
+  return 1;
 }
