@@ -44,7 +44,8 @@ Deadbolt has been tested and confirmed to work on the following operating system
 | GLib | 2.64.0+ | Core utility functions | Required for basic functionality |
 | OpenSSL | 1.1.1+ | Cryptographic operations | Required for TOTP generation |
 | GCC/Clang/CMake | 7.0+ | Compiler with SIMD support | Required for building from source |
-| xsimd | 7.0+ | Cross-platform SIMD implementation library | Required for building from source |
+| xsimd | 13.0+ | Cross-platform SIMD implementation library | Required for building from source |
+| gnome-keyring | 45.0+ | Linux Keyring integration | Required for secure key storage |
 
 ## 🛠️ Installation
 
@@ -54,13 +55,13 @@ Deadbolt has been tested and confirmed to work on the following operating system
 # Install dependencies
 ## Ubuntu/Debian
 sudo apt update
-sudo apt install build-essential cmake libsecret-1-dev libssl-dev libglib2.0-dev xsimd
+sudo apt install build-essential cmake libsecret-1-dev libssl-dev libglib2.0-dev xsimd gnome-keyring
 
 ## Fedora/RHEL/CentOS
-sudo dnf install gcc gcc-c++ cmake libsecret-devel openssl-devel glib2-devel xsimd
+sudo dnf install gcc gcc-c++ cmake libsecret-devel openssl-devel glib2-devel xsimd gnome-keyring
 
 ## Arch Linux
-sudo pacman -S base-devel cmake libsecret openssl glib2 xsimd
+sudo pacman -S base-devel cmake libsecret openssl glib2 xsimd gnome-keyring
 
 # Clone the repository
 git clone https://github.com/santacodes/deadbolt.git
