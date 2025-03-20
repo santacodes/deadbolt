@@ -63,8 +63,14 @@ int Parser::perform_operations(
   // n/new for new service
   // g/get for get totp
   // l/list to get all the totp
-  if ((*ops)["n"] != "" || (*ops)["new"] != "") {
-    SecretsManager::storeKey("service", "secret");
+  if (((*ops)["n"] != "" || (*ops)["new"] != "") &&
+      ((*ops)["s"] != "" || (*ops)["secret"] != "")) {
+    std::string service = (*ops)["n"] != "" ? (*ops)["n"] : (*ops)["new"];
+    std::string secret = (*ops)["s"] != "" ? (*ops)["s"] : (*ops)["secret"];
+    SecretsManager::storeKey(service, secret);
+  } else if (((*ops)["d"] != "" || (*ops)["delete"] != "")) {
+    std::string service = (*ops)["d"] != "" ? (*ops)["d"] : (*ops)["delete"];
+    SecretsManager::deleteKey(service);
   }
   return 1;
 }
