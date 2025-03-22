@@ -37,6 +37,8 @@ endif()
 # Include directories
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
+add_compile_options(-O3)
+
 # TOTP library
 add_library(totp STATIC 
     ${INCLUDE_DIR}/totp/totp.cpp

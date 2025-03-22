@@ -5,7 +5,7 @@
 #include <string.h>
 
 #define KEYRING_LABEL "deadbolt"
-#define COLLECTION_NAME "deadbolt"
+#define COLLECTION_NAME "/org/freedesktop/secrets/collection/deadbolt"
 #define SCHEMA_NAME "org.example.deadbolt"
 
 static const SecretSchema totp_schema = {
@@ -130,4 +130,3 @@ int totp_delete_key(const char *service_name) {
   }
   return result ? 0 : 1;
 }
-
