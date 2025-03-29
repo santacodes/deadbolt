@@ -2,13 +2,12 @@
 #define LOGGER_HPP
 
 #include <fstream>
-#include <iostream>
 #include <mutex>
 #include <string>
 
 class Logger {
 public:
-  explicit Logger(const std::string &filename);
+  explicit Logger();
   ~Logger();
   void log(const std::string &message);
 

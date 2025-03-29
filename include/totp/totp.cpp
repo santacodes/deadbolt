@@ -15,6 +15,7 @@
 #include <ctime>
 #include <iomanip>
 #include <iostream>
+#include <logger/logger.hpp>
 #include <openssl/evp.h>
 #include <openssl/hmac.h>
 #include <sstream>
@@ -24,6 +25,8 @@
 #include <xsimd/xsimd.hpp>
 
 namespace xs = xsimd;
+
+Logger logger;
 
 // Vectorized base32 decoding
 std::vector<uint8_t> totp::decodeBase32(std::string input) {

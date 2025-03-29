@@ -50,27 +50,20 @@ Parser::options(int size, char *cmdinput[]) {
   }
 
   args.clear();
-  std::cout << "This is the hashmap" << std::endl;
-  for (auto x : processed_argument)
-    std::cout << x.first << " " << x.second
-              << std::endl; // returns the hashmap of the key and argument
   Parser::perform_operations(&processed_argument);
   return &processed_argument;
 }
 
 int Parser::perform_operations(
     std::unordered_map<std::string, std::string> *ops) {
-  // n/new for new service
-  // g/get for get totp
-  // l/list to get all the totp
-  if (((*ops)["n"] != "" || (*ops)["new"] != "") &&
-      ((*ops)["s"] != "" || (*ops)["secret"] != "")) {
-    std::string service = (*ops)["n"] != "" ? (*ops)["n"] : (*ops)["new"];
-    std::string secret = (*ops)["s"] != "" ? (*ops)["s"] : (*ops)["secret"];
-    SecretsManager::storeKey(service, secret);
-  } else if (((*ops)["d"] != "" || (*ops)["delete"] != "")) {
-    std::string service = (*ops)["d"] != "" ? (*ops)["d"] : (*ops)["delete"];
-    SecretsManager::deleteKey(service);
+
+  if (!(*ops)["n"].empty() || !(*ops)["new"].empty()) {
+
+    if ((*ops)["s"] != "" || (*ops)["secret"] != "") {
+      SecretsManager::storeKey(
+          (*ops)["n"].empty() ? (*ops)["new"] : (*ops)["n"],
+          (*ops)["s"].empty() ? (*ops)["secret"] : (*ops)["s"]);
+    }
   }
-  return 1;
+  return 0;
 }

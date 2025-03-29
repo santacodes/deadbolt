@@ -2,9 +2,11 @@
 #include <chrono>
 #include <ctime>
 
+#define FILENAME "log.txt"
+
 // Initialise with a log file
-Logger::Logger(const std::string &filename) {
-  logFile.open(filename, std::ios::app);
+Logger::Logger() {
+  logFile.open(FILENAME, std::ios::app);
   if (!logFile) {
     throw std::runtime_error("Unable to open log file");
   }
