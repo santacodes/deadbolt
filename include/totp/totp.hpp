@@ -31,5 +31,6 @@ private:
 
 public:
   int fetch_totps(std::vector<std::string> &secrets);
+  int fetch_totps(std::string &secret);
 };
 #endif // TOTP_H

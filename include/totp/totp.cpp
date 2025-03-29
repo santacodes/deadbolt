@@ -210,6 +210,12 @@ void totp::printDebugInfo() {
             << xs::batch<uint8_t, xs::default_arch>::size << std::endl;
 }
 
+int totp::fetch_totps(std::string &secret) {
+
+  std::cout << "Current TOTP: " << generateTOTP(secret) << std::endl;
+  return 0;
+}
+
 int totp::fetch_totps(std::vector<std::string> &secrets) {
 
   // Check if a secret was provided as a command-line argument

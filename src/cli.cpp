@@ -5,7 +5,6 @@
 #include <string>
 #include <totp/totp.hpp>
 #include <unordered_map>
-#include <vector>
 /*
 
 --- DOCUMENTATION ---
@@ -14,6 +13,7 @@ Operations that can be performed
 
   New entry (-n || --new, -s || --secret) : To create a entry to store a totp
 secret
+  Get (-g || --get) : Get TOTP for a service
   Delete (-d || --delete) : To delete the key
 
 */
@@ -29,12 +29,6 @@ int main(int argc, char *argv[]) {
   std::unordered_map<std::string, std::string> *args;
 
   args = Parser::options(argc, argv);
-  std::vector<std::string> secrets = {
-      "2FASTEST",
-  };
-  // Initialise a vector and pass it to get the otps
-  totp obj = totp();
-  obj.fetch_totps(secrets);
 
   Logger logger = Logger();
   logger.log("Checking if keyring exists");

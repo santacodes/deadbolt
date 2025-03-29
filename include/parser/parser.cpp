@@ -2,6 +2,7 @@
 #include <iostream>
 #include <store/store_wrapper.hpp>
 #include <string>
+#include <totp/totp.hpp>
 #include <unordered_map>
 #include <vector>
 
@@ -56,7 +57,9 @@ Parser::options(int size, char *cmdinput[]) {
 
 int Parser::perform_operations(
     std::unordered_map<std::string, std::string> *ops) {
+  totp totp_inst = totp();
 
+  // Store a new secret
   if (!(*ops)["n"].empty() || !(*ops)["new"].empty()) {
 
     if ((*ops)["s"] != "" || (*ops)["secret"] != "") {
@@ -64,6 +67,21 @@ int Parser::perform_operations(
           (*ops)["n"].empty() ? (*ops)["new"] : (*ops)["n"],
           (*ops)["s"].empty() ? (*ops)["secret"] : (*ops)["s"]);
     }
+  }
+  // Delete a secret
+  else if (!(*ops)["d"].empty() || !(*ops)["delete"].empty()) {
+    SecretsManager::deleteKey((*ops)["d"].empty() ? (*ops)["delete"]
+                                                  : (*ops)["d"]);
+  }
+
+  else if (!(*ops)["g"].empty() || !(*ops)["get"].empty()) {
+    std::string secret = SecretsManager::retrieveKey(
+        (*ops)["g"].empty() ? (*ops)["get"] : (*ops)["g"]);
+    std::cout << "This is the TOTP for this key " << secret;
+    totp_inst.fetch_totps(secret);
+
+  } else {
+    std::cout << "Invalid CLI argument(s)!";
   }
   return 0;
 }
