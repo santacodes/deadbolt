@@ -80,40 +80,32 @@ make
 ./deadbolt
 ```
 
-<!---
+
 ## 📖 Usage
 
 ### Basic Commands
 
 ```bash
 # Add a new TOTP key
-deadbolt add <service> <secret>
+deadbolt --new <service> <secret>
 
 # Example:
-deadbolt add github JBSWY3DPEHPK3PXP
+deadbolt -n/--new github JBSWY3DPEHPK3PXP
 
 # Generate TOTP code
-deadbolt generate <service>
+deadbolt --get <service>
 
 # Example:
-deadbolt generate github
-
-# List all stored services
-deadbolt list
+deadbolt -g/--get github
 
 # Remove a service
-deadbolt remove <service>
+deadbolt --delete <service>
 
 # Example:
-deadbolt remove github
+deadbolt -d/--delete github
 
-# Show details about a stored service
-deadbolt info <service>
-
-# Example:
-deadbolt info github
 ```
---->
+
 ## ⚡ Performance
 
 Deadbolt's SIMD-optimized TOTP generation provides significant performance advantages:
