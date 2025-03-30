@@ -14,37 +14,33 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, ubuntu-22.04, ubuntu-20.04, debian-12, debian-11, fedora-39, fedora-38, archlinux, macos-14, macos-13]
-        arch: [x86_64, arm64]
-        exclude:
-          - os: archlinux
-            arch: arm64  # Arch Linux ARM builds require special handling
     runs-on: ${{ matrix.os }}
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Set up environment
-      run: echo "Using architecture: ${{ matrix.arch }}"
+    - name: Print Environment Info
+      run: echo "Building on ${{ matrix.os }}"
 
     - name: Install dependencies (Debian/Ubuntu)
-      if: runner.os == 'Linux' && contains(matrix.os, 'ubuntu') || contains(matrix.os, 'debian')
+      if: startsWith(matrix.os, 'ubuntu') || startsWith(matrix.os, 'debian')
       run: |
         sudo apt update
         sudo apt install -y cmake build-essential libssl-dev libsecret-1-dev libglib2.0-dev
 
     - name: Install dependencies (Fedora)
-      if: runner.os == 'Linux' && contains(matrix.os, 'fedora')
+      if: startsWith(matrix.os, 'fedora')
       run: |
         sudo dnf install -y cmake gcc-c++ make openssl-devel libsecret-devel glib2-devel
 
     - name: Install dependencies (Arch Linux)
-      if: runner.os == 'Linux' && matrix.os == 'archlinux'
+      if: matrix.os == 'archlinux'
       run: |
         sudo pacman -Syu --noconfirm cmake base-devel openssl glib2
 
     - name: Install dependencies (macOS)
-      if: runner.os == 'macOS'
+      if: startsWith(matrix.os, 'macos')
       run: |
         brew install cmake openssl glib
 
