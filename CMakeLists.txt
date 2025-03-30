@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.31)
+cmake_minimum_required(VERSION 3.20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -22,7 +22,6 @@ set(XSIMD_SEARCH_PATHS
     /usr/include/xsimd
 )
 
-
 # Find xsimd header
 find_path(XSIMD_INCLUDE_DIR 
     NAMES xsimd/xsimd.hpp
@@ -44,12 +43,12 @@ add_compile_options(-O3)
 add_library(totp STATIC 
     ${INCLUDE_DIR}/totp/totp.cpp
 )
-target_include_directories(totp PRIVATE
+target_include_directories(totp PUBLIC 
     ${INCLUDE_DIR}
     ${XSIMD_INCLUDE_DIR}
     ${OPENSSL_INCLUDE_DIR}
 )
-target_link_libraries(totp PRIVATE
+target_link_libraries(totp PUBLIC 
     OpenSSL::Crypto
 )
 
@@ -57,12 +56,12 @@ target_link_libraries(totp PRIVATE
 add_library(store STATIC 
     ${INCLUDE_DIR}/store/store.c
 )
-target_include_directories(store PRIVATE
+target_include_directories(store PUBLIC 
     ${INCLUDE_DIR}
     ${LIBSECRET_INCLUDE_DIRS}
     ${GLIB_INCLUDE_DIRS}
 )
-target_link_libraries(store PRIVATE
+target_link_libraries(store PUBLIC 
     ${LIBSECRET_LIBRARIES}
     ${GLIB_LIBRARIES}
 )
@@ -71,7 +70,7 @@ target_link_libraries(store PRIVATE
 add_library(parser STATIC 
     ${INCLUDE_DIR}/parser/parser.cpp
 )
-target_include_directories(parser PRIVATE
+target_include_directories(parser PUBLIC 
     ${INCLUDE_DIR}
     ${XSIMD_INCLUDE_DIR}
 )
@@ -79,7 +78,7 @@ target_include_directories(parser PRIVATE
 # Logger 
 add_library(logger ${INCLUDE_DIR}/logger/logger.cpp)
 
-target_link_libraries(parser PRIVATE 
+target_link_libraries(parser PUBLIC 
     store 
     totp
     logger
