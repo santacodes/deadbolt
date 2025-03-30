@@ -26,8 +26,8 @@ jobs:
     - name: Install dependencies (Debian/Ubuntu)
       if: startsWith(matrix.os, 'ubuntu') || startsWith(matrix.os, 'debian')
       run: |
-        sudo apt update
-        sudo apt install -y cmake build-essential libssl-dev libsecret-1-dev libglib2.0-dev
+        sudo apt-get update
+        sudo apt-get install -y cmake build-essential libssl-dev libsecret-1-dev libglib2.0-dev
 
     - name: Install dependencies (Fedora)
       if: startsWith(matrix.os, 'fedora')
@@ -37,12 +37,12 @@ jobs:
     - name: Install dependencies (Arch Linux)
       if: matrix.os == 'archlinux'
       run: |
-        sudo pacman -Syu --noconfirm cmake base-devel openssl glib2
+        sudo pacman -Syu --noconfirm cmake base-devel openssl glib2 libsecret
 
     - name: Install dependencies (macOS)
       if: startsWith(matrix.os, 'macos')
       run: |
-        brew install cmake openssl glib
+        brew install cmake openssl glib libsecret
 
     - name: Fetch xsimd
       run: |
