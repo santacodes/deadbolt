@@ -22,10 +22,6 @@ set(XSIMD_SEARCH_PATHS
     /usr/include/xsimd
 )
 
-# CLIP
-set(CLIP_EXAMPLES OFF CACHE BOOL "Compile clip examples")
-set(CLIP_TESTS OFF CACHE BOOL "Compile clip tests")
-
 
 # Find xsimd header
 find_path(XSIMD_INCLUDE_DIR 
@@ -89,9 +85,6 @@ target_link_libraries(parser PRIVATE
     logger
 )
 
-# clip library for clipboard access
-add_subdirectory(external/clip)
-
 link_directories(${LIBSECRET_LIBRARY_DIRS} ${GLIB_LIBRARY_DIRS})
 
 # Main executable
@@ -106,5 +99,4 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME} PRIVATE 
     parser
     OpenSSL::Crypto
-    clip
 )
