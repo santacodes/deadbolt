@@ -1,3 +1,6 @@
+// Compile this source only for linux
+#ifdef __linux__
+
 #include "store.h"
 #include <libsecret/secret.h>
 #include <stdio.h>
@@ -130,3 +133,5 @@ int totp_delete_key(const char *service_name) {
   }
   return result ? 0 : 1;
 }
+
+#endif
