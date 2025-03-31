@@ -42,7 +42,7 @@ jobs:
     - name: Install dependencies (macOS)
       if: startsWith(matrix.os, 'macos')
       run: |
-        brew install cmake openssl glib libsecret
+        brew install cmake openssl sqlite3
 
     - name: Fetch xsimd
       run: |

@@ -1,3 +1,6 @@
+// Compile this source only for MacOS
+#ifdef __APPLE__
+
 #include "store.h"
 #include <sqlite3.h>
 #include <stdio.h>
@@ -134,3 +137,4 @@ int totp_delete_key(const char *service_name) {
   return result;
 }
 
+#endif
