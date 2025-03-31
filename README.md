@@ -90,7 +90,7 @@ make
 deadbolt --new <service> <secret>
 
 # Example:
-deadbolt -n/--new github JBSWY3DPEHPK3PXP
+deadbolt -n/--new github -s/--secret JBSWY3DPEHPK3PXP
 
 # Generate TOTP code
 deadbolt --get <service>
