@@ -212,7 +212,7 @@ void totp::printDebugInfo() {
 
 int totp::fetch_totps(std::string &secret) {
 
-  std::cout << "Current TOTP: " << generateTOTP(secret) << std::endl;
+  std::cout << "TOTP: " << generateTOTP(secret) << std::endl;
   return 0;
 }
 

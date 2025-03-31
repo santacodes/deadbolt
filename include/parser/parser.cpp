@@ -74,10 +74,11 @@ int Parser::perform_operations(
                                                   : (*ops)["d"]);
   }
 
+  // Get the TOTP for a service
   else if (!(*ops)["g"].empty() || !(*ops)["get"].empty()) {
-    std::string secret = SecretsManager::retrieveKey(
-        (*ops)["g"].empty() ? (*ops)["get"] : (*ops)["g"]);
-    std::cout << "This is the TOTP for this key " << secret;
+    std::string service = (*ops)["g"].empty() ? (*ops)["get"] : (*ops)["g"];
+    std::string secret = SecretsManager::retrieveKey(service);
+    std::cout << "This is the TOTP for: " << service << std::endl;
     totp_inst.fetch_totps(secret);
 
   } else {
