@@ -74,6 +74,16 @@ public:
   }
 
   /**
+   * Lists the available services
+   */
+  static void listServices() {
+    int result = list_services();
+    if (result != 0) {
+      throw std::runtime_error("Failed to list the services");
+    }
+  }
+
+  /**
    * Check if a TOTP key exists for a given service
    * @param service_name Name of the service
    * @return true if key exists, false otherwise

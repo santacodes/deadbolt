@@ -63,6 +63,7 @@ int Parser::perform_operations(
   std::string secret = !(*ops)["s"].empty() ? (*ops)["s"] : (*ops)["secret"];
   std::string del = !(*ops)["d"].empty() ? (*ops)["d"] : (*ops)["delete"];
   std::string get = !(*ops)["g"].empty() ? (*ops)["g"] : (*ops)["get"];
+  std::string list = !(*ops)["l"].empty() ? (*ops)["l"] : (*ops)["list"];
 
   if (!name.empty() && !secret.empty()) {
     SecretsManager::storeKey(name, secret);
@@ -72,6 +73,10 @@ int Parser::perform_operations(
     std::string retrievedSecret = SecretsManager::retrieveKey(get);
     std::cout << "This is the TOTP for: " << get << std::endl;
     totp_inst.fetch_totps(retrievedSecret);
+  } else if (list.empty()) {
+    std::cout << "List of TOTP services " << std::endl;
+    std::cout << "-----------------------" << std::endl;
+    SecretsManager::listServices();
   } else {
     std::cout << "Invalid CLI argument(s)!" << std::endl;
   }

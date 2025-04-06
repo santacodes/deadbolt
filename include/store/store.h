@@ -15,6 +15,8 @@ void totp_free_key(char *totp_key);
 
 int totp_delete_key(const char *service_name);
 
+int list_services();
+
 #ifdef __cplusplus
 }
 #endif

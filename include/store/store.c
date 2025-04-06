@@ -132,4 +132,33 @@ int totp_delete_key(const char *service_name) {
   return result ? 0 : 1;
 }
 
+int list_services() {
+  if (!check_keyrings_exists() || !unlock_collection())
+    return 1;
+
+  GError *error = NULL;
+  GList *items = secret_collection_get_items(cached_collection);
+
+  if (items == NULL) {
+    g_print("No stored TOTP services found.\n");
+    return 0;
+  }
+
+  g_print("Stored TOTP services:\n");
+  for (GList *l = items; l != NULL; l = l->next) {
+    SecretItem *item = SECRET_ITEM(l->data);
+    GHashTable *attributes = secret_item_get_attributes(item);
+
+    gchar *service_name = g_hash_table_lookup(attributes, "service");
+    if (service_name != NULL) {
+      g_print("- %s\n", service_name);
+    }
+
+    g_hash_table_unref(attributes);
+  }
+
+  g_list_free_full(items, g_object_unref);
+  return 0;
+}
+
 #endif
