@@ -4,8 +4,6 @@
 #include "store.h"
 #include <libsecret/secret.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 #define KEYRING_LABEL "deadbolt"
 #define COLLECTION_NAME "/org/freedesktop/secrets/collection/deadbolt"

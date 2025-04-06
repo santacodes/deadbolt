@@ -1,7 +1,6 @@
 #ifndef TOTP_MANAGER_HPP
 #define TOTP_MANAGER_HPP
 
-#include <memory>
 #include <stdexcept>
 #include <string>
 
