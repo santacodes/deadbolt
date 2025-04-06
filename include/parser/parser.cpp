@@ -59,30 +59,22 @@ int Parser::perform_operations(
     std::unordered_map<std::string, std::string> *ops) {
   totp totp_inst = totp();
 
-  // Store a new secret
-  if (!(*ops)["n"].empty() || !(*ops)["new"].empty()) {
+  std::string name = !(*ops)["n"].empty() ? (*ops)["n"] : (*ops)["new"];
+  std::string secret = !(*ops)["s"].empty() ? (*ops)["s"] : (*ops)["secret"];
+  std::string del = !(*ops)["d"].empty() ? (*ops)["d"] : (*ops)["delete"];
+  std::string get = !(*ops)["g"].empty() ? (*ops)["g"] : (*ops)["get"];
 
-    if ((*ops)["s"] != "" || (*ops)["secret"] != "") {
-      SecretsManager::storeKey(
-          (*ops)["n"].empty() ? (*ops)["new"] : (*ops)["n"],
-          (*ops)["s"].empty() ? (*ops)["secret"] : (*ops)["s"]);
-    }
-  }
-  // Delete a secret
-  else if (!(*ops)["d"].empty() || !(*ops)["delete"].empty()) {
-    SecretsManager::deleteKey((*ops)["d"].empty() ? (*ops)["delete"]
-                                                  : (*ops)["d"]);
-  }
-
-  // Get the TOTP for a service
-  else if (!(*ops)["g"].empty() || !(*ops)["get"].empty()) {
-    std::string service = (*ops)["g"].empty() ? (*ops)["get"] : (*ops)["g"];
-    std::string secret = SecretsManager::retrieveKey(service);
-    std::cout << "This is the TOTP for: " << service << std::endl;
-    totp_inst.fetch_totps(secret);
-
+  if (!name.empty() && !secret.empty()) {
+    SecretsManager::storeKey(name, secret);
+  } else if (!del.empty()) {
+    SecretsManager::deleteKey(del);
+  } else if (!get.empty()) {
+    std::string retrievedSecret = SecretsManager::retrieveKey(get);
+    std::cout << "This is the TOTP for: " << get << std::endl;
+    totp_inst.fetch_totps(retrievedSecret);
   } else {
-    std::cout << "Invalid CLI argument(s)!";
+    std::cout << "Invalid CLI argument(s)!" << std::endl;
   }
+
   return 0;
 }
