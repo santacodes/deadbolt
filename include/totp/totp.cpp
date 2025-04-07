@@ -190,6 +190,14 @@ totp::generateBatchTOTP(const std::vector<std::string> &secrets,
   return results;
 }
 
+int getTimeLeft() {
+  time_t currentTime = time(nullptr);
+  uint64_t timeStep = 30;
+  uint64_t counter = currentTime / timeStep;
+  int time_left = timeStep - (currentTime % timeStep);
+  return time_left;
+}
+
 // Debug function only to test, Do not use in release!
 void totp::printDebugInfo() {
   time_t currentTime = time(nullptr);
@@ -213,6 +221,7 @@ void totp::printDebugInfo() {
 int totp::fetch_totps(std::string &secret) {
 
   std::cout << "TOTP: " << generateTOTP(secret) << std::endl;
+  std::cout << "Time until next code : " << getTimeLeft() << std::endl;
   return 0;
 }
 
@@ -221,10 +230,12 @@ int totp::fetch_totps(std::vector<std::string> &secrets) {
   // Check if a secret was provided as a command-line argument
   if (secrets.size() == 0) {
     std::cout << "No secrets provided!";
+    return 1;
   }
   if (secrets.size() == 1) {
     std::string otp = generateTOTP(secrets[0]);
     std::cout << "Current TOTP: " << otp << std::endl;
+    std::cout << "Time until next code : " << getTimeLeft() << std::endl;
   }
   // Process a vector batch of secrets to generate TOTP
   if (secrets.size() > 2) {
@@ -236,6 +247,7 @@ int totp::fetch_totps(std::vector<std::string> &secrets) {
       std::cout << "TOTP for secret " << i + 1 << ": " << batchResults[i]
                 << std::endl;
     }
+    std::cout << "Time until next code : " << getTimeLeft() << std::endl;
   }
   // printDebugInfo();
 
