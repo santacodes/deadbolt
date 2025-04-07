@@ -137,4 +137,25 @@ int totp_delete_key(const char *service_name) {
   return result;
 }
 
+int list_services() {
+  sqlite3 *db = open_db();
+  if (!db)
+    return 1;
+
+  const char *sql = "SELECT service FROM totp_keys;";
+  sqlite3_stmt *stmt;
+  char *key = NULL;
+
+  if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) == SQLITE_OK) {
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+      const char *retrieved_key = (const char *)sqlite3_column_text(stmt, 0);
+      printf("- %s \n", retrieved_key);
+    }
+  }
+
+  sqlite3_finalize(stmt);
+  sqlite3_close(db);
+  return 0;
+}
+
 #endif
