@@ -1,0 +1,6 @@
+[submodule "clip"]
+	path = clip
+	url = https://github.com/dacap/clip.git
+[submodule "xsimd"]
+	path = xsimd
+	url = https://github.com/xtensor-stack/xsimd.git

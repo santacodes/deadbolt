@@ -19,8 +19,8 @@ endif()
 # Search SIMD paths
 set(XSIMD_SEARCH_PATHS
     ${XSIMD_PATH}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/xsimd
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/xsimd/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/xsimd
+    ${CMAKE_CURRENT_SOURCE_DIR}/xsimd/include
     ${CMAKE_CURRENT_SOURCE_DIR}/.local/include/xsimd
     /usr/local/include/xsimd
     /usr/include/xsimd
@@ -92,6 +92,15 @@ if(UNIX AND NOT APPLE)
     link_directories(${LIBSECRET_LIBRARY_DIRS} ${GLIB_LIBRARY_DIRS})
 endif()
 
+# Clipboard
+# Disable clip examples and tests
+set(CLIP_EXAMPLES OFF CACHE BOOL "Compile clip examples")
+set(CLIP_TESTS OFF CACHE BOOL "Compile clip tests")
+#set(CLIP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/clip)
+
+# Add clip subdirectory to compile the library
+add_subdirectory(clip)
+
 # Main executable
 add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/src/cli.cpp)
 target_include_directories(${PROJECT_NAME} PRIVATE 
@@ -99,5 +108,5 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${XSIMD_INCLUDE_DIR}
     ${OPENSSL_INCLUDE_DIR}
 )
-target_link_libraries(${PROJECT_NAME} PRIVATE parser OpenSSL::Crypto logger)
+target_link_libraries(${PROJECT_NAME} PRIVATE parser OpenSSL::Crypto logger clip)
 
