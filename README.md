@@ -98,6 +98,9 @@ deadbolt --get <service>
 # Example:
 deadbolt -g/--get github
 
+# List all services
+deadbolt -l/--list
+
 # Remove a service
 deadbolt --delete <service>
 
