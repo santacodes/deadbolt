@@ -19,8 +19,8 @@ endif()
 # Search SIMD paths
 set(XSIMD_SEARCH_PATHS
     ${XSIMD_PATH}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/xsimd
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/xsimd/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/xsimd
+    ${CMAKE_CURRENT_SOURCE_DIR}/xsimd/include
     ${CMAKE_CURRENT_SOURCE_DIR}/.local/include/xsimd
     /usr/local/include/xsimd
     /usr/include/xsimd
@@ -44,6 +44,22 @@ include_directories(${INCLUDE_DIR})
 
 # Optimization flags
 add_compile_options(-O3)
+
+# Clipboard
+# Disable clip examples and tests
+set(CLIP_EXAMPLES OFF CACHE BOOL "Compile clip examples")
+set(CLIP_TESTS OFF CACHE BOOL "Compile clip tests")
+set(CLIP_ENABLE_IMAGE OFF CACHE BOOL "Disable image support")
+set(CLIP_X11_WITH_PNG CACHE BOOL "Disable X11 image support")
+
+set(CLIP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/clip)
+
+# Add clip subdirectory to compile the library
+add_subdirectory(clip)
+
+# Clipboard library
+add_library(clipboard STATIC ${INCLUDE_DIR}/clipboard/clipboard.cpp)
+target_include_directories(clipboard PUBLIC ${INCLUDE_DIR} ${CLIP_INCLUDE_DIR})
 
 # TOTP library
 add_library(totp STATIC 
@@ -81,7 +97,7 @@ endif()
 
 # Parser library
 add_library(parser STATIC ${INCLUDE_DIR}/parser/parser.cpp)
-target_include_directories(parser PUBLIC ${INCLUDE_DIR} ${XSIMD_INCLUDE_DIR})
+target_include_directories(parser PUBLIC ${INCLUDE_DIR})
 target_link_libraries(parser PUBLIC store totp)
 
 # Logger 
@@ -98,6 +114,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${INCLUDE_DIR}
     ${XSIMD_INCLUDE_DIR}
     ${OPENSSL_INCLUDE_DIR}
+    ${CLIP_INCLUDE_DIR}
 )
-target_link_libraries(${PROJECT_NAME} PRIVATE parser OpenSSL::Crypto logger)
+target_link_libraries(${PROJECT_NAME} PRIVATE parser logger)
 

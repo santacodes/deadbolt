@@ -13,7 +13,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, ubuntu-22.04, ubuntu-20.04, macos-latest, macos-14, macos-13]
+        os: [ubuntu-latest, ubuntu-24.04, ubuntu-22.04, macos-latest, macos-15, macos-14, macos-13]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -27,7 +27,7 @@ jobs:
       if: startsWith(matrix.os, 'ubuntu') || startsWith(matrix.os, 'debian')
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake build-essential libssl-dev libsecret-1-dev libglib2.0-dev
+        sudo apt-get install -y cmake build-essential libssl-dev libsecret-1-dev libglib2.0-dev libx11-dev
 
     - name: Install dependencies (Fedora)
       if: startsWith(matrix.os, 'fedora')
@@ -44,9 +44,10 @@ jobs:
       run: |
         brew install cmake openssl sqlite3
 
-    - name: Fetch xsimd
+    - name: Fetch xsimd and clip
       run: |
-        git clone https://github.com/xtensor-stack/xsimd.git external/xsimd
+        git clone https://github.com/xtensor-stack/xsimd.git xsimd
+        git clone https://github.com/dacap/clip.git
 
     - name: Configure CMake
       run: cmake -S . -B build/ -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}

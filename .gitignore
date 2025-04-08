@@ -48,4 +48,6 @@ DEADBOLT.dir/
 build/
 .cache/
 external/
+xsimd/
+clip/
 
