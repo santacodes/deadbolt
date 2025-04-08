@@ -49,6 +49,9 @@ add_compile_options(-O3)
 # Disable clip examples and tests
 set(CLIP_EXAMPLES OFF CACHE BOOL "Compile clip examples")
 set(CLIP_TESTS OFF CACHE BOOL "Compile clip tests")
+set(CLIP_ENABLE_IMAGE OFF CACHE BOOL "Disable image support")
+set(CLIP_X11_WITH_PNG CACHE BOOL "Disable X11 image support")
+
 set(CLIP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/clip)
 
 # Add clip subdirectory to compile the library

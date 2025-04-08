@@ -63,8 +63,10 @@ sudo dnf install gcc gcc-c++ cmake libsecret-devel openssl-devel glib2-devel xsi
 ## Arch Linux
 sudo pacman -S base-devel cmake libsecret openssl glib2 xsimd gnome-keyring
 
-# Clone the repository
-git --recurse-submodules clone https://github.com/santacodes/deadbolt.git
+# Clone the deps repository locally 
+git clone https://github.com/xtensor-stack/xsimd.git xsimd # optional if already installed through package manager
+git clone https://github.com/dacap/clip.git clip
+
 cd deadbolt
 
 # Create a build directory
