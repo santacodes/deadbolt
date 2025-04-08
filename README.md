@@ -64,7 +64,7 @@ sudo dnf install gcc gcc-c++ cmake libsecret-devel openssl-devel glib2-devel xsi
 sudo pacman -S base-devel cmake libsecret openssl glib2 xsimd gnome-keyring
 
 # Clone the repository
-git clone https://github.com/santacodes/deadbolt.git
+git --recurse-submodules clone https://github.com/santacodes/deadbolt.git
 cd deadbolt
 
 # Create a build directory

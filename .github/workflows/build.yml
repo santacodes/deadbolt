@@ -19,6 +19,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        submodules: recursive
 
     - name: Print Environment Info
       run: echo "Building on ${{ matrix.os }}"
@@ -43,10 +45,6 @@ jobs:
       if: startsWith(matrix.os, 'macos')
       run: |
         brew install cmake openssl sqlite3
-
-    - name: Fetch xsimd
-      run: |
-        git clone https://github.com/xtensor-stack/xsimd.git external/xsimd
 
     - name: Configure CMake
       run: cmake -S . -B build/ -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}

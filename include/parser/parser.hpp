@@ -1,7 +1,8 @@
+#ifndef PARSER_HPP
+#define PARSER_HPP
+
 #include <string>
 #include <unordered_map>
-#ifndef PARSER_H
-#define PARSER_H
 
 class Parser {
 public:

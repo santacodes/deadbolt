@@ -45,6 +45,19 @@ include_directories(${INCLUDE_DIR})
 # Optimization flags
 add_compile_options(-O3)
 
+# Clipboard
+# Disable clip examples and tests
+set(CLIP_EXAMPLES OFF CACHE BOOL "Compile clip examples")
+set(CLIP_TESTS OFF CACHE BOOL "Compile clip tests")
+set(CLIP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/clip)
+
+# Add clip subdirectory to compile the library
+add_subdirectory(clip)
+
+# Clipboard library
+add_library(clipboard STATIC ${INCLUDE_DIR}/clipboard/clipboard.cpp)
+target_include_directories(clipboard PUBLIC ${INCLUDE_DIR} ${CLIP_INCLUDE_DIR})
+
 # TOTP library
 add_library(totp STATIC 
     ${INCLUDE_DIR}/totp/totp.cpp
@@ -81,7 +94,7 @@ endif()
 
 # Parser library
 add_library(parser STATIC ${INCLUDE_DIR}/parser/parser.cpp)
-target_include_directories(parser PUBLIC ${INCLUDE_DIR} ${XSIMD_INCLUDE_DIR})
+target_include_directories(parser PUBLIC ${INCLUDE_DIR})
 target_link_libraries(parser PUBLIC store totp)
 
 # Logger 
@@ -92,21 +105,13 @@ if(UNIX AND NOT APPLE)
     link_directories(${LIBSECRET_LIBRARY_DIRS} ${GLIB_LIBRARY_DIRS})
 endif()
 
-# Clipboard
-# Disable clip examples and tests
-set(CLIP_EXAMPLES OFF CACHE BOOL "Compile clip examples")
-set(CLIP_TESTS OFF CACHE BOOL "Compile clip tests")
-#set(CLIP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/clip)
-
-# Add clip subdirectory to compile the library
-add_subdirectory(clip)
-
 # Main executable
 add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/src/cli.cpp)
 target_include_directories(${PROJECT_NAME} PRIVATE 
     ${INCLUDE_DIR}
     ${XSIMD_INCLUDE_DIR}
     ${OPENSSL_INCLUDE_DIR}
+    ${CLIP_INCLUDE_DIR}
 )
-target_link_libraries(${PROJECT_NAME} PRIVATE parser OpenSSL::Crypto logger clip)
+target_link_libraries(${PROJECT_NAME} PRIVATE parser logger)
 

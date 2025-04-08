@@ -1,5 +1,5 @@
-#ifndef TOTP_H
-#define TOTP_H
+#ifndef TOTP_HPP
+#define TOTP_HPP
 
 #include <algorithm>
 #include <cctype>
@@ -33,4 +33,4 @@ public:
   int fetch_totps(std::vector<std::string> &secrets);
   int fetch_totps(std::string &secret);
 };
-#endif // TOTP_H
+#endif // TOTP_HPP
