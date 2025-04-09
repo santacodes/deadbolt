@@ -60,6 +60,7 @@ add_subdirectory(clip)
 # Clipboard library
 add_library(clipboard STATIC ${INCLUDE_DIR}/clipboard/clipboard.cpp)
 target_include_directories(clipboard PUBLIC ${INCLUDE_DIR} ${CLIP_INCLUDE_DIR})
+target_link_libraries(clipboard PUBLIC clip)
 
 # TOTP library
 add_library(totp STATIC 
@@ -98,7 +99,7 @@ endif()
 # Parser library
 add_library(parser STATIC ${INCLUDE_DIR}/parser/parser.cpp)
 target_include_directories(parser PUBLIC ${INCLUDE_DIR})
-target_link_libraries(parser PUBLIC store totp)
+target_link_libraries(parser PUBLIC store totp clipboard)
 
 # Logger 
 add_library(logger STATIC ${INCLUDE_DIR}/logger/logger.cpp)

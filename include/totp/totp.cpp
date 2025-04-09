@@ -12,6 +12,7 @@
 
 #include <algorithm>
 #include <cctype>
+#include <clipboard/clipboard.hpp>
 #include <ctime>
 #include <iomanip>
 #include <iostream>
@@ -219,9 +220,9 @@ void totp::printDebugInfo() {
 }
 
 int totp::fetch_totps(std::string &secret) {
-
-  std::cout << "TOTP: " << generateTOTP(secret) << std::endl;
-  std::cout << "Time until next code : " << getTimeLeft() << std::endl;
+  std::string totp_current = generateTOTP(secret);
+  std::cout << "TOTP: " << totp_current << std::endl;
+  Clipboard::set_clipboard(totp_current);
   return 0;
 }
 
