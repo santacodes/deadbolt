@@ -27,8 +27,6 @@
 
 namespace xs = xsimd;
 
-Logger logger;
-
 // Vectorized base32 decoding
 std::vector<uint8_t> totp::decodeBase32(std::string input) {
   // Base32 character set (RFC 4648)

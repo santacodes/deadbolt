@@ -30,9 +30,7 @@ int main(int argc, char *argv[]) {
 
   args = Parser::options(argc, argv);
 
-  Logger logger = Logger();
-  logger.log("Checking if keyring exists");
-
+  Logger::get().log("Checking if keyring exists");
   SecretsManager::Check_Keyring_Exists();
 
   return 0;
