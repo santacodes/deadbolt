@@ -28,10 +28,12 @@ int main(int argc, char *argv[]) {
   std::cout << "Welcome to Deadbolt CLI!" << std::endl;
   std::unordered_map<std::string, std::string> *args;
 
-  args = Parser::options(argc, argv);
-
-  Logger::get().log("Checking if keyring exists");
-  SecretsManager::Check_Keyring_Exists();
-
+  try {
+    args = Parser::options(argc, argv);
+    Logger::get().log("Checking if keyring exists");
+    SecretsManager::Check_Keyring_Exists();
+  } catch (std::exception &e) {
+    Logger::get().log(e.what());
+  }
   return 0;
 };
