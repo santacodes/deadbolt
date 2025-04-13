@@ -1,0 +1,68 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+env:
+  BUILD_TYPE: Release
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    name: Build on ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Print Environment Info
+        run: echo "Building on ${{ matrix.os }}"
+
+      - name: Install dependencies (Linux)
+        if: startsWith(matrix.os, 'ubuntu') 
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential libssl-dev libsecret-1-dev libglib2.0-dev libx11-dev
+
+      - name: Install dependencies (macOS)
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          brew install cmake openssl sqlite3
+
+      - name: Fetch xsimd and clip
+        run: |
+          git clone https://github.com/xtensor-stack/xsimd.git xsimd
+          git clone https://github.com/dacap/clip.git
+
+      - name: Configure CMake
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
+
+      - name: Build
+        run: cmake --build build --config ${{ env.BUILD_TYPE }} -j$(nproc || sysctl -n hw.ncpu)
+
+      - name: Archive binary Linux
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          mkdir -p dist
+          cp build/deadbolt/deadbolt-linux
+
+      - name: Archive binary MacOS
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          mkdir -p dist
+          cp build/deadbolt/deadbolt-macos
+       
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact-${{ matrix.os }}
+          path: dist/
+          if-no-files-found: error
